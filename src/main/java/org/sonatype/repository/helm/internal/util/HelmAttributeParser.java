@@ -57,11 +57,22 @@ public class HelmAttributeParser
       HelmAttributes helmAttributes = new HelmAttributes();
       helmAttributes.setName(attributes.get(NAME).toString());
       helmAttributes.setVersion(attributes.get(VERSION).toString());
-      helmAttributes.setDescription(attributes.get(DESCRIPTION).toString());
-      helmAttributes.setIcon(attributes.get(ICON).toString());
-      helmAttributes.setMaintainers((List<Map<String, String>>)attributes.get(MAINTAINERS));
-      helmAttributes.setSources((List<String>)attributes.get(SOURCES));
+      if(attributes.containsKey(DESCRIPTION)) {
+          helmAttributes.setDescription(attributes.get(DESCRIPTION).toString());
+      }
 
+      if(attributes.containsKey(ICON)) {
+          helmAttributes.setIcon(attributes.get(ICON).toString());
+      }
+
+      if(attributes.containsKey(MAINTAINERS)) {
+          helmAttributes.setMaintainers((List<Map<String, String>>)attributes.get(MAINTAINERS));
+      }
+
+      if (attributes.containsKey(SOURCES)) {
+          helmAttributes.setSources((List<String>)attributes.get(SOURCES));
+      }
+      
       return helmAttributes;
     }
   }
