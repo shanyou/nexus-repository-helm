@@ -33,6 +33,8 @@ public final class HelmAttributes
   private String name;
   private List<String> sources;
   private String version;
+  private String apiVersion;
+  private String kubeVersion;
 
   public String getDescription() {
     return description;
@@ -113,4 +115,20 @@ public final class HelmAttributes
   public void setAppVersion(final String appVersion) {
     this.appVersion = appVersion;
   }
+
+public String getApiVersion() {
+	return apiVersion;
+}
+
+public void setApiVersion(String apiVersion) {
+	this.apiVersion = apiVersion;
+}
+
+public String getKubeVersion() {
+	return kubeVersion;
+}
+
+public void setKubeVersion(String kubeVersion) {
+	this.kubeVersion = kubeVersion;
+}
 }

@@ -60,7 +60,7 @@ public class CreateIndexServiceImpl
     extends ComponentSupport
     implements CreateIndexService
 {
-  private final static String API_VERSION = "1.0";
+  private final static String API_VERSION = "v1";
 
   private HelmDataAccess helmDataAccess;
 
@@ -99,6 +99,7 @@ public class CreateIndexServiceImpl
     NestedAttributesMap formatAttributes = asset.formatAttributes();
     NestedAttributesMap assetAttributes = asset.attributes();
     ChartEntry chartEntry = new ChartEntry();
+    chartEntry.setApiVersion(formatAttributes.get("apiVersion", String.class));
     chartEntry.setName(formatAttributes.get(NAME, String.class));
     chartEntry.setVersion(formatAttributes.get(VERSION, String.class));
     chartEntry.setDescription(formatAttributes.get(DESCRIPTION, String.class));

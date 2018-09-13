@@ -14,7 +14,6 @@ package org.sonatype.repository.helm.internal.util;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,16 +21,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.sonatype.nexus.repository.storage.TempBlob;
 import org.sonatype.repository.helm.internal.metadata.HelmAttributes;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.sonatype.repository.helm.internal.database.HelmProperties.DESCRIPTION;
-import static org.sonatype.repository.helm.internal.database.HelmProperties.ICON;
-import static org.sonatype.repository.helm.internal.database.HelmProperties.MAINTAINERS;
-import static org.sonatype.repository.helm.internal.database.HelmProperties.NAME;
-import static org.sonatype.repository.helm.internal.database.HelmProperties.SOURCES;
-import static org.sonatype.repository.helm.internal.database.HelmProperties.VERSION;
+import static org.sonatype.repository.helm.internal.database.HelmProperties.*;
 
 /**
  * @since 0.0.2
@@ -51,12 +44,25 @@ public class HelmAttributeParser
 
   }
 
-  public HelmAttributes getAttributesFromInputStream(final InputStream inputStream) throws IOException {
+  @SuppressWarnings("unchecked")
+public HelmAttributes getAttributesFromInputStream(final InputStream inputStream) throws IOException {
     try (InputStream is = tgzParser.getChartFromInputStream(inputStream)) {
       Map<String, Object> attributes = yamlParser.load(is);
       HelmAttributes helmAttributes = new HelmAttributes();
+      // required attribute
       helmAttributes.setName(attributes.get(NAME).toString());
       helmAttributes.setVersion(attributes.get(VERSION).toString());
+      helmAttributes.setApiVersion(attributes.get(API_VERSION).toString());
+      
+      // optional attribute
+      if (attributes.containsKey(APP_VERSION)) {
+    	  helmAttributes.setAppVersion(attributes.get(APP_VERSION).toString());
+      }
+
+      if (attributes.containsKey(KUBE_VERSION)) {
+    	  helmAttributes.setKubeVersion(attributes.get(KUBE_VERSION).toString());
+      }
+
       if(attributes.containsKey(DESCRIPTION)) {
           helmAttributes.setDescription(attributes.get(DESCRIPTION).toString());
       }
@@ -72,7 +78,19 @@ public class HelmAttributeParser
       if (attributes.containsKey(SOURCES)) {
           helmAttributes.setSources((List<String>)attributes.get(SOURCES));
       }
-      
+
+      if (attributes.containsKey(KEYWORDS)) {
+          helmAttributes.setKeywords((List<String>)attributes.get(KEYWORDS));
+      }
+
+      if (attributes.containsKey(ENGINE)) {
+    	  helmAttributes.setEngine(attributes.get(ENGINE).toString());
+      }
+
+      if (attributes.containsKey(HOME)) {
+    	  helmAttributes.setHome(attributes.get(HOME).toString());
+      }
+
       return helmAttributes;
     }
   }

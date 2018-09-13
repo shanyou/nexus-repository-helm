@@ -33,12 +33,17 @@ public class HelmAssetAttributePopulator
     extends ComponentSupport
 {
   public void populate(final NestedAttributesMap attributes, final HelmAttributes helmAttributes) {
-    attributes.set(NAME, helmAttributes.getName());
+	attributes.set(NAME, helmAttributes.getName());
     attributes.set(DESCRIPTION, helmAttributes.getDescription());
     attributes.set(VERSION, helmAttributes.getVersion());
     attributes.set(ICON, helmAttributes.getIcon());
     attributes.set(SOURCES, helmAttributes.getSources());
     attributes.set(MAINTAINERS, helmAttributes.getMaintainers());
     attributes.set(APP_VERSION, helmAttributes.getAppVersion());
+    attributes.set(API_VERSION, helmAttributes.getApiVersion());
+    attributes.set(KUBE_VERSION, helmAttributes.getKubeVersion());
+    attributes.set(KEYWORDS, helmAttributes.getKeywords());
+    attributes.set(ENGINE, helmAttributes.getEngine());
+    attributes.set(HOME, helmAttributes.getHome());
   }
 }

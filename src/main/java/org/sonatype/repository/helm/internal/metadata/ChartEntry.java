@@ -22,8 +22,17 @@ public class ChartEntry
   private List<String> urls;
   private List<String> sources;
   private List<Map<String, String>> maintainers;
+  private String apiVersion;
 
-  public String getName() { return this.name; }
+  public String getApiVersion() {
+	return apiVersion;
+}
+
+public void setApiVersion(String apiVersion) {
+	this.apiVersion = apiVersion;
+}
+
+public String getName() { return this.name; }
 
   public void setName(final String name) { this.name = name; }
 
